@@ -21,8 +21,8 @@ show_help(){
 }
 
 init_repo() {
-    git clone https://github.com/Volodymyr51775/Lab-4-Podstawa-praca-z-GIT.git
-    repo_name=$(basename "https://github.com/Volodymyr51775/Lab-4-Podstawa-praca-z-GIT.git" .git)
+    git clone https://github.com/Smiian53696/Podstawy-poruszania-si-w-GIT#podstawy-poruszania-si-w-git
+    repo_name=$(basename "https://github.com/Smiian53696/Podstawy-poruszania-si-w-GIT#podstawy-poruszania-si-w-git" .git)
     export PATH=$PATH:$(pwd)/$repo_name
     echo "Repository $repo_name cloned and added to PATH"
 }
