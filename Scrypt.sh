@@ -1,35 +1,59 @@
 #!/bin/bash
+
 show_date(){
     date
 }
 
 create_log(){
     for i in $(seq 1 $1); do
-        echo "log$i.txt - Utworzone przez skrypt skrypt.sh w dniu $(date)" > "log$i.txt"
+        echo "log$i.txt - Created by script script.sh on $(date)" > "log$i.txt"
     done
 }
 
 show_help(){
-    echo "Dostepne opcje:"
-    echo "--date wyswietli dzisiejsza date"
-    echo "--logs utworzy automatycznie 100 plikow logx.txt, x numer pliku od 1 100"
-    echo "--logs 30 utworzenie automatycznie 30 plikow, analogicznie jak wyzej, ale z obsluga argumentu liczby plikow"
-    echo "--help wyswietlenie wszystkich dostepnych opcji"
+    echo "Available options:"
+    echo "--date, -d: display today's date"
+    echo "--logs, -l: create 100 log files logi.txt, numbered from 1 to 100"
+    echo "--logs 30, -l 30: create specified number of log files, similar to above, but with support for specifying the number of files"
+    echo "--help, -h: display all available options"
+    echo "--init, -i: clone repository"
+    echo "--error, -e: create errorx/errorx.txt"
+}
+
+init_repo() {
+    git clone https://github.com/Volodymyr51775/Lab-4-Podstawa-praca-z-GIT.git
+    repo_name=$(basename "https://github.com/Volodymyr51775/Lab-4-Podstawa-praca-z-GIT.git" .git)
+    export PATH=$PATH:$(pwd)/$repo_name
+    echo "Repository $repo_name cloned and added to PATH"
+}
+
+create_errors(){
+    mkdir -p errorx
+    for i in $(seq 1 ${1:-100}); do
+        echo "error$i.txt - created by script script.sh" > "errorx/error$i.txt"
+    done
 }
 
 case "$1" in
-    --date)
+    --date|-d)
     show_date
     ;;
-    --logs)
+    --logs|-l)
     count=${2:-100}
     create_log $count
     ;;
-    --help)
+    --help|-h)
     show_help
     ;;
+    --error|-e)
+    count=${2:-100}
+    create_errors $count
+    ;;
+    --init|-i)
+    init_repo
+    ;;
     *)
-    echo "Nieznana opcja: $1"
+    echo "Unknown option: $1"
     show_help
     ;;
 esac
